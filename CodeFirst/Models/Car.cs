@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using CodeFirst.Repositories;
 
 namespace CodeFirst.Models
@@ -9,8 +10,12 @@ namespace CodeFirst.Models
 
         public int Cylinders { get; set; }
 
+        [Required]
+        [MaxLength(100)]
         public string Make { get; set; }
 
+        [Required]
+        [MaxLength(255)]
         public string Model { get; set; }
     }
 }
