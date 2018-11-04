@@ -1,16 +1,16 @@
+using System;
+using System.Linq;
+using System.Reflection;
+using Boxed.AspNetCore;
+using CodeFirst.Constants;
+using CodeFirst.Options;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace CodeFirst
 {
-    using System;
-    using System.Linq;
-    using System.Reflection;
-    using CodeFirst.Constants;
-    using CodeFirst.Options;
-    using Boxed.AspNetCore;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Mvc.ApiExplorer;
-    using Microsoft.Extensions.DependencyInjection;
-
-    public static partial class ApplicationBuilderExtensions
+    public static class ApplicationBuilderExtensions
     {
         /// <summary>
         /// Adds developer friendly error pages for the application which contain extra debug and exception information.
@@ -41,17 +41,17 @@ namespace CodeFirst
                 throw new InvalidOperationException("CacheProfiles.StaticFiles section is missing in appsettings.json");
             return application
                 .UseStaticFiles(
-                    new StaticFileOptions()
+                    new StaticFileOptions
                     {
                         OnPrepareResponse = context =>
                         {
                             context.Context.ApplyCacheProfile(cacheProfile);
-                        },
+                        }
                     });
         }
 
 
-        public static IApplicationBuilder UseCustomSwaggerUI(this IApplicationBuilder application) =>
+        public static IApplicationBuilder UseCustomSwaggerUi(this IApplicationBuilder application) =>
             application.UseSwaggerUI(
                 options =>
                 {

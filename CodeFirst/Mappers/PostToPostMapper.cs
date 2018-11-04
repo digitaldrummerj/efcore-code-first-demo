@@ -2,18 +2,18 @@
 using Boxed.AspNetCore;
 using Boxed.Mapping;
 using CodeFirst.Constants;
-using CodeFirst.ViewModels;
+using CodeFirst.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CodeFirst.Mappers
 {
-    public class PostToPostMapper : IMapper<Models.Post, Post>
+    public class PostToPostMapper : IMapper<Post, ViewModels.Post>
     {
-    private readonly IUrlHelper urlHelper;
+    private readonly IUrlHelper _urlHelper;
 
-    public PostToPostMapper(IUrlHelper urlHelper) => this.urlHelper = urlHelper;
+    public PostToPostMapper(IUrlHelper urlHelper) => _urlHelper = urlHelper;
 
-    public void Map(Models.Post source, Post destination)
+    public void Map(Post source, ViewModels.Post destination)
     {
         if (source == null)
         {
@@ -26,11 +26,11 @@ namespace CodeFirst.Mappers
         }
 
         destination.Id = source.Id;
-        destination.Blog = new BlogToBlogMapper(urlHelper).Map(source.Blog);
+        destination.Blog = new BlogToBlogMapper(_urlHelper).Map(source.Blog);
         destination.BlogId = source.BlogId;
         destination.Content = source.Content;
         destination.Title = source.Title;
-        destination.Url = this.urlHelper.AbsoluteRouteUrl(PostsControllerRoute.GetPost, new { source.Id });
+        destination.Url = _urlHelper.AbsoluteRouteUrl(PostsControllerRoute.GetPost, new { source.Id });
     }
 
 }

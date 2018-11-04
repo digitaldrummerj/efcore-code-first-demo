@@ -1,13 +1,13 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CodeFirst.Constants;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace CodeFirst.Controllers
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using CodeFirst.Constants;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Swashbuckle.AspNetCore.Annotations;
-
     /// <summary>
     /// The status of this API.
     /// </summary>
@@ -16,10 +16,10 @@ namespace CodeFirst.Controllers
     [ApiVersion("1.0")]
     public class StatusController : ControllerBase
     {
-        private IEnumerable<IHealthChecker> healthCheckers;
+        private IEnumerable<IHealthChecker> _healthCheckers;
 
         public StatusController(IEnumerable<IHealthChecker> healthCheckers) =>
-            this.healthCheckers = healthCheckers;
+            _healthCheckers = healthCheckers;
 
         /// <summary>
         /// Gets the status of this API and its dependencies, giving an indication of its health.
@@ -35,7 +35,7 @@ namespace CodeFirst.Controllers
             {
                 var tasks = new List<Task>();
 
-                foreach (var healthChecker in this.healthCheckers)
+                foreach (var healthChecker in _healthCheckers)
                 {
                     tasks.Add(healthChecker.CheckHealth());
                 }

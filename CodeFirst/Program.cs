@@ -1,18 +1,18 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using Boxed.AspNetCore;
+using CodeFirst.Options;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using Serilog.Core;
+
 namespace CodeFirst
 {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using System.Reflection;
-    using CodeFirst.Options;
-    using Boxed.AspNetCore;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Server.Kestrel.Core;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Serilog;
-    using Serilog.Core;
-
     public sealed class Program
     {
         public static int Main(string[] args) => LogAndRun(CreateWebHostBuilder(args).Build());

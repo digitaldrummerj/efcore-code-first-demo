@@ -1,7 +1,7 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace CodeFirst.ViewModels
 {
-    using System.ComponentModel.DataAnnotations;
-
     public class PageOptions
     {
         [Range(1, int.MaxValue)]

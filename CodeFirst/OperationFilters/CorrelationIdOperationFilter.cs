@@ -1,10 +1,10 @@
+using System;
+using System.Collections.Generic;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
 namespace CodeFirst.OperationFilters
 {
-    using System;
-    using System.Collections.Generic;
-    using Swashbuckle.AspNetCore.Swagger;
-    using Swashbuckle.AspNetCore.SwaggerGen;
-
     /// <summary>
     /// Adds a Swashbuckle <see cref="NonBodyParameter"/> to all operations with a description of the X-Correlation-ID
     /// HTTP header and a default GUID value.
@@ -25,14 +25,14 @@ namespace CodeFirst.OperationFilters
             }
 
             operation.Parameters.Add(
-                new NonBodyParameter()
+                new NonBodyParameter
                 {
                     Default = Guid.NewGuid(),
                     Description = "Used to uniquely identify the HTTP request. This ID is used to correlate the HTTP request between a client and server.",
                     In = "header",
                     Name = "X-Correlation-ID",
                     Required = false,
-                    Type = "string",
+                    Type = "string"
                 });
         }
     }

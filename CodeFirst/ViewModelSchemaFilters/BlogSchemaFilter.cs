@@ -1,14 +1,14 @@
+using CodeFirst.ViewModels;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
 namespace CodeFirst.ViewModelSchemaFilters
 {
-    using CodeFirst.ViewModels;
-    using Swashbuckle.AspNetCore.Swagger;
-    using Swashbuckle.AspNetCore.SwaggerGen;
-
     public class BlogSchemaFilter : ISchemaFilter
     {
         public void Apply(Schema model, SchemaFilterContext context)
         {
-            var blog = new Blog()
+            var blog = new Blog
             {
                 Id = 1,
                 BlogUrl = "http://localhost:1313",

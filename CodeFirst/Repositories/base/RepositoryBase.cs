@@ -191,7 +191,7 @@ namespace CodeFirst.Repositories
 
         public int Delete(int id, bool persist = true)
         {
-            T result = this.Get(id);
+            T result = Get(id);
             Table.Remove(result);
             return persist ? SaveChanges() : 0;
         }
@@ -228,7 +228,7 @@ namespace CodeFirst.Repositories
             }
         }
 
-        private bool _disposedValue = false;
+        private bool _disposedValue;
 
         private void Dispose(bool disposing)
         {

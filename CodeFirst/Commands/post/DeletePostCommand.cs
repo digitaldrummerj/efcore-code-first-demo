@@ -13,13 +13,13 @@ namespace CodeFirst.Commands
 
         public IActionResult Execute(int id)
         {
-            var car = this._postRepository.Get(id);
+            var car = _postRepository.Get(id);
             if (car == null)
             {
                 return new NotFoundResult();
             }
 
-            this._postRepository.Delete(car);
+            _postRepository.Delete(car);
 
             return new NoContentResult();
         }

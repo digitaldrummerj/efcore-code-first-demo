@@ -1,14 +1,14 @@
+using CodeFirst.ViewModels;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+
 namespace CodeFirst.ViewModelSchemaFilters
 {
-    using CodeFirst.ViewModels;
-    using Swashbuckle.AspNetCore.Swagger;
-    using Swashbuckle.AspNetCore.SwaggerGen;
-
     public class SavePostSchemaFilter : ISchemaFilter
     {
         public void Apply(Schema model, SchemaFilterContext context)
         {
-            var savePost = new SavePost()
+            var savePost = new SavePost
             {
                 BlogId = 1,
                 Content = "Test Content",

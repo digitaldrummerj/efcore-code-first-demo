@@ -1,18 +1,19 @@
+using System;
+using Boxed.Mapping;
+using CodeFirst.Services;
+using CodeFirst.ViewModels;
+using Post = CodeFirst.Models.Post;
+
 namespace CodeFirst.Mappers
 {
-    using System;
-    using CodeFirst.Services;
-    using CodeFirst.ViewModels;
-    using Boxed.Mapping;
-
-    public class PostToSavePostMapper : IMapper<Models.Post, SavePost>, IMapper<SavePost, Models.Post>
+    public class PostToSavePostMapper : IMapper<Post, SavePost>, IMapper<SavePost, Post>
     {
-        private readonly IClockService clockService;
+        private readonly IClockService _clockService;
 
         public PostToSavePostMapper(IClockService clockService) =>
-            this.clockService = clockService;
+            _clockService = clockService;
 
-        public void Map(Models.Post source, SavePost destination)
+        public void Map(Post source, SavePost destination)
         {
             if (source == null)
             {
@@ -29,7 +30,7 @@ namespace CodeFirst.Mappers
             destination.Title = source.Title;
         }
 
-        public void Map(SavePost source, Models.Post destination)
+        public void Map(SavePost source, Post destination)
         {
             if (source == null)
             {
@@ -41,7 +42,7 @@ namespace CodeFirst.Mappers
                 throw new ArgumentNullException(nameof(destination));
             }
 
-            var now = this.clockService.UtcNow;
+            var now = _clockService.UtcNow;
 
             if (destination.Created == DateTimeOffset.MinValue)
             {

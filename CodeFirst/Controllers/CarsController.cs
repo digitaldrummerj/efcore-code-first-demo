@@ -1,17 +1,15 @@
+using CodeFirst.Commands;
+using CodeFirst.Constants;
+using CodeFirst.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Net.Http.Headers;
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace CodeFirst.Controllers
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using CodeFirst.Commands;
-    using CodeFirst.Constants;
-    using CodeFirst.ViewModels;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.JsonPatch;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.Net.Http.Headers;
-    using Swashbuckle.AspNetCore.Annotations;
-
     [Route("[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
@@ -25,13 +23,13 @@ namespace CodeFirst.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "The allowed HTTP methods.")]
         public IActionResult Options()
         {
-            this.HttpContext.Response.Headers.AppendCommaSeparatedValues(
+            HttpContext.Response.Headers.AppendCommaSeparatedValues(
                 HeaderNames.Allow,
                 HttpMethods.Get,
                 HttpMethods.Head,
                 HttpMethods.Options,
                 HttpMethods.Post);
-            return this.Ok();
+            return Ok();
         }
 
         /// <summary>
@@ -43,7 +41,7 @@ namespace CodeFirst.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "The allowed HTTP methods.")]
         public IActionResult Options(int id)
         {
-            this.HttpContext.Response.Headers.AppendCommaSeparatedValues(
+            HttpContext.Response.Headers.AppendCommaSeparatedValues(
                 HeaderNames.Allow,
                 HttpMethods.Delete,
                 HttpMethods.Get,
@@ -52,7 +50,7 @@ namespace CodeFirst.Controllers
                 HttpMethods.Patch,
                 HttpMethods.Post,
                 HttpMethods.Put);
-            return this.Ok();
+            return Ok();
         }
 
         /// <summary>

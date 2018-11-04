@@ -1,55 +1,54 @@
+using Boxed.Mapping;
+using CodeFirst.Repositories;
+using CodeFirst.ViewModels;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Car = CodeFirst.Models.Car;
+
 namespace CodeFirst.Commands
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using CodeFirst.Repositories;
-    using CodeFirst.ViewModels;
-    using Boxed.Mapping;
-    using Microsoft.AspNetCore.JsonPatch;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-
     public class PatchCarCommand : IPatchCarCommand
     {
-        private readonly IActionContextAccessor actionContextAccessor;
-        private readonly IObjectModelValidator objectModelValidator;
-        private readonly ICarRepository carRepository;
-        private readonly IMapper<Models.Car, Car> carToCarMapper;
-        private readonly IMapper<Models.Car, SaveCar> carToSaveCarMapper;
-        private readonly IMapper<SaveCar, Models.Car> saveCarToCarMapper;
+        private readonly IActionContextAccessor _actionContextAccessor;
+        private readonly IObjectModelValidator _objectModelValidator;
+        private readonly ICarRepository _carRepository;
+        private readonly IMapper<Car, ViewModels.Car> _carToCarMapper;
+        private readonly IMapper<Car, SaveCar> _carToSaveCarMapper;
+        private readonly IMapper<SaveCar, Car> _saveCarToCarMapper;
 
         public PatchCarCommand(
             IActionContextAccessor actionContextAccessor,
             IObjectModelValidator objectModelValidator,
             ICarRepository carRepository,
-            IMapper<Models.Car, Car> carToCarMapper,
-            IMapper<Models.Car, SaveCar> carToSaveCarMapper,
-            IMapper<SaveCar, Models.Car> saveCarToCarMapper)
+            IMapper<Car, ViewModels.Car> carToCarMapper,
+            IMapper<Car, SaveCar> carToSaveCarMapper,
+            IMapper<SaveCar, Car> saveCarToCarMapper)
         {
-            this.actionContextAccessor = actionContextAccessor;
-            this.objectModelValidator = objectModelValidator;
-            this.carRepository = carRepository;
-            this.carToCarMapper = carToCarMapper;
-            this.carToSaveCarMapper = carToSaveCarMapper;
-            this.saveCarToCarMapper = saveCarToCarMapper;
+            _actionContextAccessor = actionContextAccessor;
+            _objectModelValidator = objectModelValidator;
+            _carRepository = carRepository;
+            _carToCarMapper = carToCarMapper;
+            _carToSaveCarMapper = carToSaveCarMapper;
+            _saveCarToCarMapper = saveCarToCarMapper;
         }
 
         public IActionResult Execute(
             int id,
             JsonPatchDocument<SaveCar> patch)
         {
-            var car = this.carRepository.Get(id);
+            var car = _carRepository.Get(id);
             if (car == null)
             {
                 return new NotFoundResult();
             }
 
-            var saveCar = this.carToSaveCarMapper.Map(car);
-            var modelState = this.actionContextAccessor.ActionContext.ModelState;
+            var saveCar = _carToSaveCarMapper.Map(car);
+            var modelState = _actionContextAccessor.ActionContext.ModelState;
             patch.ApplyTo(saveCar, modelState);
-            this.objectModelValidator.Validate(
-                this.actionContextAccessor.ActionContext,
+            _objectModelValidator.Validate(
+                _actionContextAccessor.ActionContext,
                 validationState: null,
                 prefix: null,
                 model: saveCar);
@@ -58,9 +57,9 @@ namespace CodeFirst.Commands
                 return new BadRequestObjectResult(modelState);
             }
 
-            this.saveCarToCarMapper.Map(saveCar, car);
-            this.carRepository.Update(car);
-            var carViewModel = this.carToCarMapper.Map(car);
+            _saveCarToCarMapper.Map(saveCar, car);
+            _carRepository.Update(car);
+            var carViewModel = _carToCarMapper.Map(car);
 
             return new OkObjectResult(carViewModel);
         }

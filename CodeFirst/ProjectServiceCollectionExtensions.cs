@@ -1,13 +1,16 @@
+using Boxed.Mapping;
+using CodeFirst.Commands;
+using CodeFirst.Mappers;
+using CodeFirst.Repositories;
+using CodeFirst.Services;
+using CodeFirst.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using Blog = CodeFirst.Models.Blog;
+using Car = CodeFirst.Models.Car;
+using Post = CodeFirst.Models.Post;
+
 namespace CodeFirst
 {
-    using CodeFirst.Commands;
-    using CodeFirst.Mappers;
-    using CodeFirst.Repositories;
-    using CodeFirst.Services;
-    using CodeFirst.ViewModels;
-    using Boxed.Mapping;
-    using Microsoft.Extensions.DependencyInjection;
-
     /// <summary>
     /// <see cref="IServiceCollection"/> extension methods add project services.
     /// </summary>
@@ -43,17 +46,17 @@ namespace CodeFirst
 
         public static IServiceCollection AddProjectMappers(this IServiceCollection services) =>
             services
-                .AddSingleton<IMapper<Models.Car, Car>, CarToCarMapper>()
-                .AddSingleton<IMapper<Models.Car, SaveCar>, CarToSaveCarMapper>()
-                .AddSingleton<IMapper<SaveCar, Models.Car>, CarToSaveCarMapper>()
+                .AddSingleton<IMapper<Car, ViewModels.Car>, CarToCarMapper>()
+                .AddSingleton<IMapper<Car, SaveCar>, CarToSaveCarMapper>()
+                .AddSingleton<IMapper<SaveCar, Car>, CarToSaveCarMapper>()
 
-                .AddSingleton<IMapper<Models.Blog, Blog>, BlogToBlogMapper>()
-                .AddSingleton<IMapper<Models.Blog, SaveBlog>, BlogToSaveBlogMapper>()
-                .AddSingleton<IMapper<SaveBlog, Models.Blog>, BlogToSaveBlogMapper>()
+                .AddSingleton<IMapper<Blog, ViewModels.Blog>, BlogToBlogMapper>()
+                .AddSingleton<IMapper<Blog, SaveBlog>, BlogToSaveBlogMapper>()
+                .AddSingleton<IMapper<SaveBlog, Blog>, BlogToSaveBlogMapper>()
                 
-                .AddSingleton<IMapper<Models.Post, Post>, PostToPostMapper>()
-                .AddSingleton<IMapper<Models.Post, SavePost>, PostToSavePostMapper>()
-                .AddSingleton<IMapper<SavePost, Models.Post>, PostToSavePostMapper>()
+                .AddSingleton<IMapper<Post, ViewModels.Post>, PostToPostMapper>()
+                .AddSingleton<IMapper<Post, SavePost>, PostToSavePostMapper>()
+                .AddSingleton<IMapper<SavePost, Post>, PostToSavePostMapper>()
 
         ;
 

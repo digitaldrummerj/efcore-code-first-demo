@@ -1,18 +1,19 @@
+using System;
+using Boxed.Mapping;
+using CodeFirst.Services;
+using CodeFirst.ViewModels;
+using Car = CodeFirst.Models.Car;
+
 namespace CodeFirst.Mappers
 {
-    using System;
-    using CodeFirst.Services;
-    using CodeFirst.ViewModels;
-    using Boxed.Mapping;
-
-    public class CarToSaveCarMapper : IMapper<Models.Car, SaveCar>, IMapper<SaveCar, Models.Car>
+    public class CarToSaveCarMapper : IMapper<Car, SaveCar>, IMapper<SaveCar, Car>
     {
-        private readonly IClockService clockService;
+        private readonly IClockService _clockService;
 
         public CarToSaveCarMapper(IClockService clockService) =>
-            this.clockService = clockService;
+            _clockService = clockService;
 
-        public void Map(Models.Car source, SaveCar destination)
+        public void Map(Car source, SaveCar destination)
         {
             if (source == null)
             {
@@ -29,7 +30,7 @@ namespace CodeFirst.Mappers
             destination.Model = source.Model;
         }
 
-        public void Map(SaveCar source, Models.Car destination)
+        public void Map(SaveCar source, Car destination)
         {
             if (source == null)
             {
@@ -41,7 +42,7 @@ namespace CodeFirst.Mappers
                 throw new ArgumentNullException(nameof(destination));
             }
 
-            var now = this.clockService.UtcNow;
+            var now = _clockService.UtcNow;
 
             if (destination.Created == DateTimeOffset.MinValue)
             {

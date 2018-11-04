@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+
 namespace CodeFirst.Options
 {
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Server.Kestrel.Core;
-
     /// <summary>
     /// All options for the application.
     /// </summary>

@@ -3,36 +3,37 @@ using Boxed.Mapping;
 using CodeFirst.Repositories;
 using CodeFirst.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Blog = CodeFirst.Models.Blog;
 
 namespace CodeFirst.Commands
 {
     public class PutBlogCommand : IPutBlogCommand
     {
-        private readonly IBlogRepository blogRepository;
-        private readonly IMapper<Models.Blog, Blog> blogToBlogMapper;
-        private readonly IMapper<SaveBlog, Models.Blog> saveBlogToBlogMapper;
+        private readonly IBlogRepository _blogRepository;
+        private readonly IMapper<Blog, ViewModels.Blog> _blogToBlogMapper;
+        private readonly IMapper<SaveBlog, Blog> _saveBlogToBlogMapper;
 
         public PutBlogCommand(
             IBlogRepository blogRepository,
-            IMapper<Models.Blog, Blog> blogToBlogMapper,
-            IMapper<SaveBlog, Models.Blog> saveBlogToBlogMapper)
+            IMapper<Blog, ViewModels.Blog> blogToBlogMapper,
+            IMapper<SaveBlog, Blog> saveBlogToBlogMapper)
         {
-            this.blogRepository = blogRepository;
-            this.blogToBlogMapper = blogToBlogMapper;
-            this.saveBlogToBlogMapper = saveBlogToBlogMapper;
+            _blogRepository = blogRepository;
+            _blogToBlogMapper = blogToBlogMapper;
+            _saveBlogToBlogMapper = saveBlogToBlogMapper;
         }
 
         public IActionResult Execute(int blogId, SaveBlog saveBlog)
         {
-            var blog = this.blogRepository.Get(blogId);
+            var blog = _blogRepository.Get(blogId);
             if (blog == null)
             {
                 return new NotFoundResult();
             }
 
-            this.saveBlogToBlogMapper.Map(saveBlog, blog);
-            this.blogRepository.Update(blog);
-            var blogViewModel = this.blogToBlogMapper.Map(blog);
+            _saveBlogToBlogMapper.Map(saveBlog, blog);
+            _blogRepository.Update(blog);
+            var blogViewModel = _blogToBlogMapper.Map(blog);
 
             return new OkObjectResult(blogViewModel);
         }

@@ -1,9 +1,9 @@
+using System.ComponentModel.DataAnnotations;
+using CodeFirst.ViewModelSchemaFilters;
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace CodeFirst.ViewModels
 {
-    using System.ComponentModel.DataAnnotations;
-    using CodeFirst.ViewModelSchemaFilters;
-    using Swashbuckle.AspNetCore.Annotations;
-
     /// <summary>
     /// A make and model of car.
     /// </summary>

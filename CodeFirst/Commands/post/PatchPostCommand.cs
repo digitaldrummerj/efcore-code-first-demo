@@ -6,49 +6,50 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Post = CodeFirst.Models.Post;
 
 namespace CodeFirst.Commands
 {
     public class PatchPostCommand : IPatchPostCommand
     {
-        private readonly IActionContextAccessor actionContextAccessor;
-        private readonly IObjectModelValidator objectModelValidator;
-        private readonly IPostRepository postRepository;
-        private readonly IMapper<Models.Post, Post> postToPostMapper;
-        private readonly IMapper<Models.Post, SavePost> postToSavePostMapper;
-        private readonly IMapper<SavePost, Models.Post> savePostToPostMapper;
+        private readonly IActionContextAccessor _actionContextAccessor;
+        private readonly IObjectModelValidator _objectModelValidator;
+        private readonly IPostRepository _postRepository;
+        private readonly IMapper<Post, ViewModels.Post> _postToPostMapper;
+        private readonly IMapper<Post, SavePost> _postToSavePostMapper;
+        private readonly IMapper<SavePost, Post> _savePostToPostMapper;
 
         public PatchPostCommand(
             IActionContextAccessor actionContextAccessor,
             IObjectModelValidator objectModelValidator,
             IPostRepository postRepository,
-            IMapper<Models.Post, Post> postToPostMapper,
-            IMapper<Models.Post, SavePost> postToSavePostMapper,
-            IMapper<SavePost, Models.Post> savePostToPostMapper)
+            IMapper<Post, ViewModels.Post> postToPostMapper,
+            IMapper<Post, SavePost> postToSavePostMapper,
+            IMapper<SavePost, Post> savePostToPostMapper)
         {
-            this.actionContextAccessor = actionContextAccessor;
-            this.objectModelValidator = objectModelValidator;
-            this.postRepository = postRepository;
-            this.postToPostMapper = postToPostMapper;
-            this.postToSavePostMapper = postToSavePostMapper;
-            this.savePostToPostMapper = savePostToPostMapper;
+            _actionContextAccessor = actionContextAccessor;
+            _objectModelValidator = objectModelValidator;
+            _postRepository = postRepository;
+            _postToPostMapper = postToPostMapper;
+            _postToSavePostMapper = postToSavePostMapper;
+            _savePostToPostMapper = savePostToPostMapper;
         }
 
         public IActionResult Execute(
             int postId,
             JsonPatchDocument<SavePost> patch)
         {
-            var post = this.postRepository.Get(postId);
+            var post = _postRepository.Get(postId);
             if (post == null)
             {
                 return new NotFoundResult();
             }
 
-            var savePost = this.postToSavePostMapper.Map(post);
-            var modelState = this.actionContextAccessor.ActionContext.ModelState;
+            var savePost = _postToSavePostMapper.Map(post);
+            var modelState = _actionContextAccessor.ActionContext.ModelState;
             patch.ApplyTo(savePost, modelState);
-            this.objectModelValidator.Validate(
-                this.actionContextAccessor.ActionContext,
+            _objectModelValidator.Validate(
+                _actionContextAccessor.ActionContext,
                 validationState: null,
                 prefix: null,
                 model: savePost);
@@ -57,9 +58,9 @@ namespace CodeFirst.Commands
                 return new BadRequestObjectResult(modelState);
             }
 
-            this.savePostToPostMapper.Map(savePost, post);
-            this.postRepository.Update(post);
-            var postViewModel = this.postToPostMapper.Map(post);
+            _savePostToPostMapper.Map(savePost, post);
+            _postRepository.Update(post);
+            var postViewModel = _postToPostMapper.Map(post);
 
             return new OkObjectResult(postViewModel);
         }

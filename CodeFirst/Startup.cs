@@ -1,26 +1,25 @@
+using System;
+using Boxed.AspNetCore;
+using CodeFirst.Constants;
+using CorrelationId;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CodeFirst
 {
-    using System;
-    using CodeFirst.Constants;
-    using Boxed.AspNetCore;
-    using CorrelationId;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.Routing;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-
     /// <summary>
     /// The main start-up class for the application.
     /// </summary>
     public class Startup : IStartup
     {
-        private readonly IConfiguration configuration;
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IConfiguration _configuration;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Startup"/> class.
@@ -31,8 +30,8 @@ namespace CodeFirst
         /// Staging or Production by default. See http://docs.asp.net/en/latest/fundamentals/environments.html</param>
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
-            this.configuration = configuration;
-            this.hostingEnvironment = hostingEnvironment;
+            _configuration = configuration;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         /// <summary>
@@ -42,10 +41,10 @@ namespace CodeFirst
         /// </summary>
         public IServiceProvider ConfigureServices(IServiceCollection services) =>
             services
-                .AddDbContext<CodeFirstContext>(options => options.UseSqlServer(configuration["Db"]))
+                .AddDbContext<CodeFirstContext>(options => options.UseSqlServer(_configuration["Db"]))
                 .AddCorrelationIdFluent()
                 .AddCustomCaching()
-                .AddCustomOptions(this.configuration)
+                .AddCustomOptions(_configuration)
                 .AddCustomRouting()
                 .AddResponseCaching()
                 .AddCustomResponseCompression()
@@ -65,10 +64,10 @@ namespace CodeFirst
                     .AddAuthorization()
                     .AddDataAnnotations()
                     .AddJsonFormatters()
-                    .AddCustomJsonOptions(this.hostingEnvironment)
+                    .AddCustomJsonOptions(_hostingEnvironment)
                     .AddCustomCors()
                     .AddVersionedApiExplorer(x => x.GroupNameFormat = "'v'VVV") // Version format: 'v'major[.minor][-status]
-                    .AddCustomMvcOptions(this.hostingEnvironment)
+                    .AddCustomMvcOptions(_hostingEnvironment)
                 .Services
                 .AddProjectCommands()
                 .AddProjectMappers()
@@ -89,14 +88,14 @@ namespace CodeFirst
                 .UseResponseCompression()
                 .UseCors(CorsPolicyName.AllowAny)
                 .UseIf(
-                    !this.hostingEnvironment.IsDevelopment(),
+                    !_hostingEnvironment.IsDevelopment(),
                     x => x.UseHsts())
                 .UseIf(
-                    this.hostingEnvironment.IsDevelopment(),
+                    _hostingEnvironment.IsDevelopment(),
                     x => x.UseDeveloperErrorPages())
                 .UseStaticFilesWithCacheControl()
                 .UseMvc()
                 .UseSwagger()
-                .UseCustomSwaggerUI();
+                .UseCustomSwaggerUi();
     }
 }

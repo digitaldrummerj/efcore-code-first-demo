@@ -3,8 +3,8 @@
 using System;
 using Boxed.AspNetCore;
 using Boxed.Mapping;
+using CodeFirst.Models;
 using CodeFirst.Repositories;
-using CodeFirst.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -14,29 +14,29 @@ namespace CodeFirst.Commands
 {
     public class GetPostCommand : IGetPostCommand
     {
-        private readonly IActionContextAccessor actionContextAccessor;
-        private readonly IPostRepository postRepository;
-        private readonly IMapper<Models.Post, Post> postMapper;
+        private readonly IActionContextAccessor _actionContextAccessor;
+        private readonly IPostRepository _postRepository;
+        private readonly IMapper<Post, ViewModels.Post> _postMapper;
 
         public GetPostCommand(
             IActionContextAccessor actionContextAccessor,
             IPostRepository postRepository,
-            IMapper<Models.Post, Post> postMapper)
+            IMapper<Post, ViewModels.Post> postMapper)
         {
-            this.actionContextAccessor = actionContextAccessor;
-            this.postRepository = postRepository;
-            this.postMapper = postMapper;
+            _actionContextAccessor = actionContextAccessor;
+            _postRepository = postRepository;
+            _postMapper = postMapper;
         }
 
         public IActionResult Execute(int postId)
         {
-            var post = this.postRepository.Get(postId);
+            var post = _postRepository.Get(postId);
             if (post == null)
             {
                 return new NotFoundResult();
             }
 
-            var httpContext = this.actionContextAccessor.ActionContext.HttpContext;
+            var httpContext = _actionContextAccessor.ActionContext.HttpContext;
             if (httpContext.Request.Headers.TryGetValue(HeaderNames.IfModifiedSince, out var stringValues))
             {
                 if (DateTimeOffset.TryParse(stringValues, out var modifiedSince) &&
@@ -46,7 +46,7 @@ namespace CodeFirst.Commands
                 }
             }
 
-            var postViewModel = this.postMapper.Map(post);
+            var postViewModel = _postMapper.Map(post);
             httpContext.Response.Headers.Add(HeaderNames.LastModified, post.Modified.ToString("R"));
             return new OkObjectResult(postViewModel);
         }

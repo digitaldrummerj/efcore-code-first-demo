@@ -1,26 +1,25 @@
+using System.IO.Compression;
+using System.Linq;
+using System.Reflection;
+using Boxed.AspNetCore;
+using Boxed.AspNetCore.Swagger;
+using Boxed.AspNetCore.Swagger.OperationFilters;
+using Boxed.AspNetCore.Swagger.SchemaFilters;
+using CodeFirst.OperationFilters;
+using CodeFirst.Options;
+using CorrelationId;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
+
 namespace CodeFirst
 {
-    using System;
-    using System.IO.Compression;
-    using System.Linq;
-    using System.Reflection;
-    using CodeFirst.OperationFilters;
-    using CodeFirst.Options;
-    using Boxed.AspNetCore;
-    using Boxed.AspNetCore.Swagger;
-    using Boxed.AspNetCore.Swagger.OperationFilters;
-    using Boxed.AspNetCore.Swagger.SchemaFilters;
-    using CorrelationId;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Mvc.ApiExplorer;
-    using Microsoft.AspNetCore.ResponseCompression;
-    using Microsoft.Extensions.Caching.Distributed;
-    using Microsoft.Extensions.Caching.Memory;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Options;
-    using Swashbuckle.AspNetCore.Swagger;
-
     /// <summary>
     /// <see cref="IServiceCollection"/> extension methods which extend ASP.NET Core services.
     /// </summary>
@@ -63,7 +62,7 @@ namespace CodeFirst
 
         /// <summary>
         /// Configures the settings by binding the contents of the appsettings.json file to the specified Plain Old CLR
-        /// Objects (POCO) and adding <see cref="IOptions{T}"/> objects to the services collection.
+        /// Objects (POCO) and adding <see cref="IOptions{TOptions}"/> objects to the services collection.
         /// </summary>
         public static IServiceCollection AddCustomOptions(
             this IServiceCollection services,
@@ -165,13 +164,13 @@ namespace CodeFirst
                     var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
                     foreach (var apiVersionDescription in provider.ApiVersionDescriptions)
                     {
-                        var info = new Info()
+                        var info = new Info
                         {
                             Title = assemblyProduct,
                             Description = apiVersionDescription.IsDeprecated ?
                                 $"{assemblyDescription} This API version has been deprecated." :
                                 assemblyDescription,
-                            Version = apiVersionDescription.ApiVersion.ToString(),
+                            Version = apiVersionDescription.ApiVersion.ToString()
                         };
                         options.SwaggerDoc(apiVersionDescription.GroupName, info);
                     }

@@ -1,18 +1,19 @@
+using System;
+using Boxed.Mapping;
+using CodeFirst.Services;
+using CodeFirst.ViewModels;
+using Blog = CodeFirst.Models.Blog;
+
 namespace CodeFirst.Mappers
 {
-    using System;
-    using CodeFirst.Services;
-    using CodeFirst.ViewModels;
-    using Boxed.Mapping;
-
-    public class BlogToSaveBlogMapper : IMapper<Models.Blog, SaveBlog>, IMapper<SaveBlog, Models.Blog>
+    public class BlogToSaveBlogMapper : IMapper<Blog, SaveBlog>, IMapper<SaveBlog, Blog>
     {
-        private readonly IClockService clockService;
+        private readonly IClockService _clockService;
 
         public BlogToSaveBlogMapper(IClockService clockService) =>
-            this.clockService = clockService;
+            _clockService = clockService;
 
-        public void Map(Models.Blog source, SaveBlog destination)
+        public void Map(Blog source, SaveBlog destination)
         {
             if (source == null)
             {
@@ -28,7 +29,7 @@ namespace CodeFirst.Mappers
             destination.Name = source.Name;
         }
 
-        public void Map(SaveBlog source, Models.Blog destination)
+        public void Map(SaveBlog source, Blog destination)
         {
             if (source == null)
             {
@@ -40,7 +41,7 @@ namespace CodeFirst.Mappers
                 throw new ArgumentNullException(nameof(destination));
             }
 
-            var now = this.clockService.UtcNow;
+            var now = _clockService.UtcNow;
 
             if (destination.Created == DateTimeOffset.MinValue)
             {

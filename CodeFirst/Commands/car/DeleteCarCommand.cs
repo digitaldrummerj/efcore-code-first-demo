@@ -1,26 +1,24 @@
+using CodeFirst.Repositories;
+using Microsoft.AspNetCore.Mvc;
+
 namespace CodeFirst.Commands
 {
-    using System.Threading;
-    using System.Threading.Tasks;
-    using CodeFirst.Repositories;
-    using Microsoft.AspNetCore.Mvc;
-
     public class DeleteCarCommand : IDeleteCarCommand
     {
-        private readonly ICarRepository carRepository;
+        private readonly ICarRepository _carRepository;
 
         public DeleteCarCommand(ICarRepository carRepository) =>
-            this.carRepository = carRepository;
+            _carRepository = carRepository;
 
         public IActionResult Execute(int id)
         {
-            var car = this.carRepository.Get(id);
+            var car = _carRepository.Get(id);
             if (car == null)
             {
                 return new NotFoundResult();
             }
 
-            this.carRepository.Delete(car);
+            _carRepository.Delete(car);
 
             return new NoContentResult();
         }

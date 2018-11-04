@@ -2,8 +2,6 @@
 
 namespace CodeFirst.Models
 {
-    using System;
-
     public class Car : ModelBase
     {
 

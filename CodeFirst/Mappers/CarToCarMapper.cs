@@ -1,19 +1,19 @@
+using System;
+using Boxed.AspNetCore;
+using Boxed.Mapping;
+using CodeFirst.Constants;
+using CodeFirst.Models;
+using Microsoft.AspNetCore.Mvc;
+
 namespace CodeFirst.Mappers
 {
-    using System;
-    using CodeFirst.Constants;
-    using CodeFirst.ViewModels;
-    using Boxed.AspNetCore;
-    using Boxed.Mapping;
-    using Microsoft.AspNetCore.Mvc;
-
-    public class CarToCarMapper : IMapper<Models.Car, Car>
+    public class CarToCarMapper : IMapper<Car, ViewModels.Car>
     {
-        private readonly IUrlHelper urlHelper;
+        private readonly IUrlHelper _urlHelper;
 
-        public CarToCarMapper(IUrlHelper urlHelper) => this.urlHelper = urlHelper;
+        public CarToCarMapper(IUrlHelper urlHelper) => _urlHelper = urlHelper;
 
-        public void Map(Models.Car source, Car destination)
+        public void Map(Car source, ViewModels.Car destination)
         {
             if (source == null)
             {
@@ -29,7 +29,7 @@ namespace CodeFirst.Mappers
             destination.Cylinders = source.Cylinders;
             destination.Make = source.Make;
             destination.Model = source.Model;
-            destination.Url = this.urlHelper.AbsoluteRouteUrl(CarsControllerRoute.GetCar, new { source.Id });
+            destination.Url = _urlHelper.AbsoluteRouteUrl(CarsControllerRoute.GetCar, new { source.Id });
         }
     }
 }

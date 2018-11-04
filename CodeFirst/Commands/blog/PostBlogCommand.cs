@@ -4,30 +4,31 @@ using CodeFirst.Constants;
 using CodeFirst.Repositories;
 using CodeFirst.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Blog = CodeFirst.Models.Blog;
 
 namespace CodeFirst.Commands
 {
     public class PostBlogCommand : IPostBlogCommand
     {
-        private readonly IBlogRepository blogRepository;
-        private readonly IMapper<Models.Blog, Blog> blogToBlogMapper;
-        private readonly IMapper<SaveBlog, Models.Blog> saveBlogToBlogMapper;
+        private readonly IBlogRepository _blogRepository;
+        private readonly IMapper<Blog, ViewModels.Blog> _blogToBlogMapper;
+        private readonly IMapper<SaveBlog, Blog> _saveBlogToBlogMapper;
 
         public PostBlogCommand(
             IBlogRepository blogRepository,
-            IMapper<Models.Blog, Blog> blogToBlogMapper,
-            IMapper<SaveBlog, Models.Blog> saveBlogToBlogMapper)
+            IMapper<Blog, ViewModels.Blog> blogToBlogMapper,
+            IMapper<SaveBlog, Blog> saveBlogToBlogMapper)
         {
-            this.blogRepository = blogRepository;
-            this.blogToBlogMapper = blogToBlogMapper;
-            this.saveBlogToBlogMapper = saveBlogToBlogMapper;
+            _blogRepository = blogRepository;
+            _blogToBlogMapper = blogToBlogMapper;
+            _saveBlogToBlogMapper = saveBlogToBlogMapper;
         }
 
         public IActionResult Execute(SaveBlog saveBlog)
         {
-            var blog = this.saveBlogToBlogMapper.Map(saveBlog);
-            this.blogRepository.Add(blog);
-            var blogViewModel = this.blogToBlogMapper.Map(blog);
+            var blog = _saveBlogToBlogMapper.Map(saveBlog);
+            _blogRepository.Add(blog);
+            var blogViewModel = _blogToBlogMapper.Map(blog);
 
             return new CreatedAtRouteResult(
                 BlogsControllerRoute.GetBlog,

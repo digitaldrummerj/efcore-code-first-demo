@@ -1,15 +1,15 @@
+using System.Linq;
+using Boxed.AspNetCore;
+using CodeFirst.Constants;
+using CodeFirst.Options;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace CodeFirst
 {
-    using System.Linq;
-    using CodeFirst.Constants;
-    using CodeFirst.Options;
-    using Boxed.AspNetCore;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Mvc.Formatters;
-    using Microsoft.Extensions.DependencyInjection;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-
     public static class MvcCoreBuilderExtensions
     {
         /// <summary>

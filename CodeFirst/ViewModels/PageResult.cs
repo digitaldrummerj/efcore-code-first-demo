@@ -1,9 +1,9 @@
+using System.Collections.Generic;
+using CodeFirst.ViewModelSchemaFilters;
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace CodeFirst.ViewModels
 {
-    using System.Collections.Generic;
-    using CodeFirst.ViewModelSchemaFilters;
-    using Swashbuckle.AspNetCore.Annotations;
-
     [SwaggerSchemaFilter(typeof(PageResultCarSchemaFilter))]
     public class PageResult<T>
         where T : class
@@ -12,9 +12,9 @@ namespace CodeFirst.ViewModels
 
         public int Count { get; set; }
 
-        public bool HasNextPage { get => this.Page < this.TotalPages; }
+        public bool HasNextPage { get => Page < TotalPages; }
 
-        public bool HasPreviousPage { get => this.Page > 1; }
+        public bool HasPreviousPage { get => Page > 1; }
 
         public int TotalCount { get; set; }
 
