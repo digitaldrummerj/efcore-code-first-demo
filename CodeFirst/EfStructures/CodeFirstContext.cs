@@ -24,6 +24,8 @@ namespace CodeFirst
                 .HasIndex(b => b.Title);
 
             modelBuilder.Entity<Car>().HasIndex(b => new {b.Make, b.Model});
+
+            modelBuilder.Entity<Blog>().HasQueryFilter(b => !b.IsDeleted);
         }
     }
 }
