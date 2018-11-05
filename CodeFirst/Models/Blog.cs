@@ -6,7 +6,7 @@ using CodeFirst.Repositories;
 namespace CodeFirst.Models
 {
     [Table("Blogs")]
-    public class Blog : ModelBase
+    public class Blog : SoftDelete
     {
         [MaxLength(255, ErrorMessage = "Max length is 255 characters")]
         [Required]
@@ -18,7 +18,5 @@ namespace CodeFirst.Models
 
         [InverseProperty(nameof(ViewModels.Post.Blog))]
         public List<Post> Posts { get; set; } = new List<Post>();
-
-        public bool IsDeleted { get; set; }
     }
 }

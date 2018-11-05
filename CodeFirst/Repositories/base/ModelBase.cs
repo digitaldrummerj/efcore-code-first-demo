@@ -12,6 +12,5 @@ namespace CodeFirst.Repositories
         public DateTimeOffset Created { get; set; }
 
         public DateTimeOffset Modified { get; set; }
-
     }
 }

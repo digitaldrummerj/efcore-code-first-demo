@@ -1,10 +1,19 @@
-﻿using CodeFirst.Models;
+﻿using System;
+using System.Linq;
+using System.Reflection;
+using CodeFirst.Models;
+using CodeFirst.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CodeFirst
 {
     public class CodeFirstContext : DbContext
     {
+        private static readonly MethodInfo SetGlobalQueryForSoftDeleteMethodInfo = typeof(CodeFirstContext)
+            .GetMethods(BindingFlags.Public | BindingFlags.Instance)
+            .Single(t => t.IsGenericMethod && t.Name == "SetGlobalQueryForSoftDelete");
+
         public CodeFirstContext(DbContextOptions<CodeFirstContext> options) : base(options)
         {
 
@@ -25,7 +34,29 @@ namespace CodeFirst
 
             modelBuilder.Entity<Car>().HasIndex(b => new {b.Make, b.Model});
 
-            modelBuilder.Entity<Blog>().HasQueryFilter(b => !b.IsDeleted);
+            SetGlobalQueryFilters(modelBuilder);
         }
+
+        private void SetGlobalQueryFilters(ModelBuilder modelBuilder)
+        {
+            foreach (IMutableEntityType tp in modelBuilder.Model.GetEntityTypes())
+            {
+                Type t = tp.ClrType;
+
+                // set global filters
+                if (typeof(ISoftDelete).IsAssignableFrom(t))
+                {
+                    // softdeletable
+                    MethodInfo method = SetGlobalQueryForSoftDeleteMethodInfo.MakeGenericMethod(t);
+                    method.Invoke(this, new object[] { modelBuilder });
+                }
+            }
+        }
+
+        public void SetGlobalQueryForSoftDelete<T>(ModelBuilder builder) where T : class, ISoftDelete
+        {
+            builder.Entity<T>().HasQueryFilter(item => !item.IsDeleted);
+        }
+
     }
 }

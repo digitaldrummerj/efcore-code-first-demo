@@ -5,7 +5,7 @@ using CodeFirst.Repositories;
 namespace CodeFirst.Models
 {
     [Table("Posts")]
-    public class Post : ModelBase
+    public class Post : SoftDelete
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Title is a required field")]
         [MaxLength(200, ErrorMessage = "The maximum size of the title is 200 characters")]
