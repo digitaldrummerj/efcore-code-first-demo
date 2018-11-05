@@ -10,8 +10,8 @@ namespace CodeFirst
 
         }
 
-        public DbSet<Car> Cars { get; set; }
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
+        public DbSet<Car> Car { get; set; }
+        public DbSet<Blog> Blog { get; set; }
+        public DbSet<Post> Post { get; set; }
     }
 }

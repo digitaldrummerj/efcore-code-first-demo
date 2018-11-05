@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CodeFirst.Migrations
+namespace CodeFirst.EfStructures.Migrations
 {
     [DbContext(typeof(CodeFirstContext))]
-    partial class CarContextModelSnapshot : ModelSnapshot
+    partial class CodeFirstContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
