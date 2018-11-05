@@ -12,7 +12,8 @@ namespace CodeFirst.ViewModelSchemaFilters
             {
                 BlogId = 1,
                 Content = "Test Content",
-                Title = "Title Here"
+                Title = "Title Here",
+                IsDeleted = false
             };
             model.Default = savePost;
             model.Example = savePost;

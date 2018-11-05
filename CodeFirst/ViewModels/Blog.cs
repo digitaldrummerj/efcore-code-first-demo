@@ -6,10 +6,9 @@ namespace CodeFirst.ViewModels
 
     [SwaggerSchemaFilter(typeof(BlogSchemaFilter))]
 
-    public class Blog : ViewModelBase
+    public class Blog : ViewModelSoftDeleteBase
     {
         public string BlogUrl { get; set; }
         public string Name { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

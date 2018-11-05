@@ -5,7 +5,7 @@ namespace CodeFirst.ViewModels
 {
     [SwaggerSchemaFilter(typeof(PostSchemaFilter))]
 
-    public class Post : ViewModelBase
+    public class Post : ViewModelSoftDeleteBase
     {
         public string Title { get; set; }
         public string Content { get; set; }

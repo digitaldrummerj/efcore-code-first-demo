@@ -14,11 +14,13 @@ namespace CodeFirst.ViewModelSchemaFilters
                 BlogId = 1,
                 Content = "Test Content",
                 Title = "Title Test",
+                IsDeleted = false,
                 Blog = new Blog
                 {
                     Id = 1,
                     BlogUrl = "http://localhost:1313",
-                    Name = "Test Blog"
+                    Name = "Test Blog",
+                    IsDeleted = false
                 }
             };
             model.Default = post;
