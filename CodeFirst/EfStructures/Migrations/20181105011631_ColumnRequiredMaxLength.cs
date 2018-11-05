@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CodeFirst.Migrations
+namespace CodeFirst.EfStructures.Migrations
 {
-    public partial class ColumnsRequiredMaxLength : Migration
+    public partial class ColumnRequiredMaxLength : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

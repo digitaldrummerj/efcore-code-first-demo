@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CodeFirst.Migrations
+namespace CodeFirst.EfStructures.Migrations
 {
     [DbContext(typeof(CodeFirstContext))]
-    [Migration("20181104234128_ColumnsRequiredMaxLength")]
-    partial class ColumnsRequiredMaxLength
+    [Migration("20181105011631_ColumnRequiredMaxLength")]
+    partial class ColumnRequiredMaxLength
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
