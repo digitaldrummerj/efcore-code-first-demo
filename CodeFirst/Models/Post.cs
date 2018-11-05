@@ -15,6 +15,8 @@ namespace CodeFirst.Models
         public string Content { get; set; }
 
         public int BlogId { get; set; }
+
+        [ForeignKey(nameof(BlogId))]
         public Blog Blog { get; set; }
     }
 }
