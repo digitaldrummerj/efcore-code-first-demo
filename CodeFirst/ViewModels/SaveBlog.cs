@@ -9,5 +9,6 @@ namespace CodeFirst.ViewModels
     {
         public string BlogUrl { get; set; }
         public string Name { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

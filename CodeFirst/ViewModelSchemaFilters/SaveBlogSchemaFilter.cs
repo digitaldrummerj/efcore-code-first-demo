@@ -11,7 +11,8 @@ namespace CodeFirst.ViewModelSchemaFilters
             var saveBlog = new SaveBlog
             {
                 BlogUrl = "localhost:1314",
-                Name = "Blog Name"
+                Name = "Blog Name",
+                IsDeleted = false
             };
             model.Default = saveBlog;
             model.Example = saveBlog;

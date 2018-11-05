@@ -50,6 +50,7 @@ namespace CodeFirst.Mappers
 
             destination.BlogUrl = source.BlogUrl;
             destination.Name = source.Name;
+            destination.IsDeleted = source.IsDeleted;
             destination.Modified = now;
         }
     }

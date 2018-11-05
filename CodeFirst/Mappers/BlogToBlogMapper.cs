@@ -28,6 +28,7 @@ namespace CodeFirst.Mappers
             destination.Id = source.Id;
             destination.BlogUrl = source.BlogUrl;
             destination.Name = source.Name;
+            destination.IsDeleted = source.IsDeleted;
             destination.Url = _urlHelper.AbsoluteRouteUrl(BlogsControllerRoute.GetBlog, new {source.Id});
         }
     }

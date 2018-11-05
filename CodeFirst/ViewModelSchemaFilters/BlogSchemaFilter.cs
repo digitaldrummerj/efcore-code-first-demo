@@ -12,6 +12,7 @@ namespace CodeFirst.ViewModelSchemaFilters
             {
                 Id = 1,
                 BlogUrl = "http://localhost:1313",
+                IsDeleted = false,
                 Name = "Test Blog"
             };
             model.Default = blog;
