@@ -26,7 +26,11 @@ namespace CodeFirst.Mappers
         }
 
         destination.Id = source.Id;
-        destination.Blog = new BlogToBlogMapper(_urlHelper).Map(source.Blog);
+        if (source.Blog != null)
+        {
+            destination.Blog = new BlogToBlogMapper(_urlHelper).Map(source.Blog);
+        }
+
         destination.BlogId = source.BlogId;
         destination.Content = source.Content;
         destination.Title = source.Title;
