@@ -1,7 +1,9 @@
-﻿using CodeFirst.Repositories;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using CodeFirst.Repositories;
 
 namespace CodeFirst.Models
 {
+    [Table("Posts")]
     public class Post : ModelBase
     {
         public string Title { get; set; }
