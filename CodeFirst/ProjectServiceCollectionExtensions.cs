@@ -62,9 +62,9 @@ namespace CodeFirst
 
         public static IServiceCollection AddProjectRepositories(this IServiceCollection services) =>
             services
-                .AddSingleton<ICarRepository, CarRepository>()
-                .AddSingleton<IBlogRepository, BlogRepository>()
-                .AddSingleton<IPostRepository, PostRepository>();
+                .AddScoped<ICarRepository, CarRepository>()
+                .AddScoped<IBlogRepository, BlogRepository>()
+                .AddScoped<IPostRepository, PostRepository>();
 
         public static IServiceCollection AddProjectServices(this IServiceCollection services) =>
             services
