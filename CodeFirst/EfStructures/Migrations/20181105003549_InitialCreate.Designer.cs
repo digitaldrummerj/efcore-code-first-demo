@@ -4,14 +4,16 @@ using CodeFirst;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CodeFirst.Migrations
+namespace CodeFirst.EfStructures.Migrations
 {
     [DbContext(typeof(CodeFirstContext))]
-    partial class CodeFirstContextModelSnapshot : ModelSnapshot
+    [Migration("20181105003549_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace CodeFirst.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Blogs");
+                    b.ToTable("Blog");
                 });
 
             modelBuilder.Entity("CodeFirst.Models.Car", b =>
@@ -56,7 +58,7 @@ namespace CodeFirst.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("CodeFirst.Models.Post", b =>
@@ -79,7 +81,7 @@ namespace CodeFirst.Migrations
 
                     b.HasIndex("BlogId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("CodeFirst.Models.Post", b =>
