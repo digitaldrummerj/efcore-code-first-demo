@@ -35,6 +35,11 @@ namespace CodeFirst
             modelBuilder.Entity<Car>().HasIndex(b => new {b.Make, b.Model});
 
             SetGlobalQueryFilters(modelBuilder);
+
+            modelBuilder.Entity<Post>()
+                .HasOne(p => p.Blog)
+                .WithMany(b => b.Posts)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
         private void SetGlobalQueryFilters(ModelBuilder modelBuilder)
