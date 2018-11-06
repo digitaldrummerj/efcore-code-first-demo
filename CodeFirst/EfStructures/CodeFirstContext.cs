@@ -40,6 +40,15 @@ namespace CodeFirst
                 .HasOne(p => p.Blog)
                 .WithMany(b => b.Posts)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Blog>()
+                .Property(b => b.Created)
+                .HasDefaultValueSql("getutcdate()");
+
+            modelBuilder.Entity<Post>()
+                .Property(b => b.Created)
+                .HasDefaultValueSql("getutcdate()");
+
         }
 
         private void SetGlobalQueryFilters(ModelBuilder modelBuilder)

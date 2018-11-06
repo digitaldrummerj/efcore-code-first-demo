@@ -43,10 +43,10 @@ namespace CodeFirst.Mappers
 
             var now = _clockService.UtcNow;
 
-            if (destination.Created == DateTimeOffset.MinValue)
-            {
-                destination.Created = now;
-            }
+            //if (destination.Created == DateTimeOffset.MinValue)
+            //{
+            //    destination.Created = now;
+            //}
 
             destination.BlogUrl = source.BlogUrl;
             destination.Name = source.Name;
