@@ -9,8 +9,8 @@ namespace CodeFirst.Repositories
 {
     public abstract class RepositoryBase<T> : IRepository<T> where T : ModelBase, new()
     {
-        protected readonly DbSet<T> Table;
-        public CodeFirstContext Context { get; private set; }
+        protected DbSet<T> Table { get; private set; }
+        protected CodeFirstContext Context { get; private set; }
 
         protected RepositoryBase(CodeFirstContext context)
         {
